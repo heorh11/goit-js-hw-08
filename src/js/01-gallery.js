@@ -23,16 +23,8 @@ const lightbox = new SimpleLightbox('.gallery a', {
   captionsData: 'alt',
   captionDelay: 250,
 });
-galleryContainer.addEventListener('click', evt => {
-  const clickedElement = evt.target;
 
-  // Check if the clicked element is an image
-  if (clickedElement.tagName === 'IMG') {
-    evt.preventDefault();
-    const largeImgSrc = clickedElement.getAttribute('data-source');
-    // Відкриваємо велике зображення в спливаючому вікні
-    lightbox.open({ items: [largeImgSrc] });
-  }
-});
+
+ 
 
 console.log(galleryItems);

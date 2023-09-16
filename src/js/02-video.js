@@ -9,12 +9,10 @@ const LOCAL_STORAGE_KEY = 'videoplayer-current-time';
 const savedTime = localStorage.getItem(LOCAL_STORAGE_KEY);
 
 // Відтворюємо відео та встановлюємо час відтворення
-vimeoPlayer.ready().then(() => {
+vimeoPlayer.play().then(() => {
   if (savedTime) {
     vimeoPlayer.setCurrentTime(parseFloat(savedTime));
   }
-
-  vimeoPlayer.play();
 
   // Встановлюємо обробник події timeupdate для відстежування часу відтворення
   vimeoPlayer.on('timeupdate', throttle(saveTimeToLocalStorage, 1000));
