@@ -5,7 +5,7 @@ const emailInput = feedbackForm.querySelector('input[name="email"]');
 const messageTextarea = feedbackForm.querySelector('textarea[name="message"]');
 const feedbackStorageKey = 'feedback-form-state';
 
-// Відстежуємо подію input на формі та зберігаємо дані у локальне сховище зі затримкою
+// Track input changes on the form and save data to local storage with throttling
 feedbackForm.addEventListener(
   'input',
   throttle(event => {
@@ -17,7 +17,7 @@ feedbackForm.addEventListener(
   }, 500)
 );
 
-// При завантаженні сторінки перевіряємо сховище та заповнюємо поля форми, якщо є збережені дані
+// Check local storage on page load and populate form fields with saved data if available
 window.addEventListener('load', () => {
   const storedData = localStorage.getItem(feedbackStorageKey);
   if (storedData) {
@@ -27,25 +27,30 @@ window.addEventListener('load', () => {
   }
 });
 
-// Додаємо обробник події для сабміту форми
+// Add an event handler for form submission
 feedbackForm.addEventListener('submit', event => {
   event.preventDefault();
-  
-  // Очищаємо сховище
-  localStorage.removeItem(feedbackStorageKey);
 
-  // Отримуємо дані з полів форми
+  // Get data from form fields
   const emailValue = emailInput.value;
   const messageValue = messageTextarea.value;
 
-  // Очищаємо поля форми
-  emailInput.value = '';
-  messageTextarea.value = '';
+  // Check if either input field is empty
+  if (emailValue.trim() === '' || messageValue.trim() === '') {
+    // Show an alert if either field is empty
+    alert('Both email and message fields must be filled.');
+  } else {
+    // Clear local storage
+    localStorage.removeItem(feedbackStorageKey);
 
-  // Виводимо у консоль об'єкт з полями email та message та їхніми значеннями
-  console.log({
-    email: emailValue,
-    message: messageValue,
-  });
+    // Clear form fields
+    emailInput.value = '';
+    messageTextarea.value = '';
+
+    // Log an object with email and message fields and their values
+    console.log({
+      email: emailValue,
+      message: messageValue,
+    });
+  }
 });
-
